@@ -1,113 +1,83 @@
 // ===== 新增 OCR 功能開始 =====
 
-// ===== 新增 OCR 功能開始 =====
-
 const OCR_MAPPING = {
 
     // ===============================
     // 壽險
     // ===============================
 
-    "終身壽險": {
-    id:"life-amount"
-},
-
-    "定期壽險": {
-    id:"life-amount"
-},
-
-    "壽險": {
-    id:"life-amount"
-},
-
-    // ===============================
-    // 重大傷病
-    // ===============================
-
-    "重大傷病": {
-        id: "critical-amount",
-        mode: "replace"
-    },
-
-    "重大疾病": {
-        id: "disease-amount",
-        mode: "replace"
-    },
-
-    "重大疾病險": {
-        id: "disease-amount",
-        mode: "replace"
-    },
-
-    "特定傷病": {
-        id: "disease-amount",
-        mode: "replace"
-    },
-
-    // ===============================
-    // 日額
-    // ===============================
-
-    "住院日額": {
-        id: "daily-hosp",
-        mode: "replace"
-    },
-
-    "住院看護": {
-        id: "daily-nurse",
-        mode: "replace"
-    },
-
-    "看護": {
-        id: "daily-nurse",
-        mode: "replace"
-    },
-
-    "出院療養": {
-        id: "daily-post",
-        mode: "replace"
-    },
-
-    // ===============================
-    // 定額手術
-    // ===============================
-
-    "定額手術(最低)": {
-        id: "daily-op-min",
-        mode: "replace"
-    },
-
-    "定額手術(最高)": {
-        id: "daily-op-max",
-        mode: "replace"
-    },
-
-    // ===== 後面先保留，下一 Part 繼續 =====
-
-};
-
-// ===== 新增 OCR 功能結束 =====ㄒ
-
-    // ===============================
-    // 壽險
-    // ===============================
-
-    "終身壽險": { target: "life", mode: "replace" },
-    "定期壽險": { target: "life", mode: "replace" },
-    "壽險": { target: "life", mode: "replace" },
+    "終身壽險": { id: "life-amount" },
+    "定期壽險": { id: "life-amount" },
+    "壽險": { id: "life-amount" },
 
     // ===============================
     // 重大疾病 / 重大傷病
     // ===============================
 
-    "重大傷病": { target: "critical", mode: "replace" },
-    "重大疾病": { target: "critical", mode: "replace" },
-    "重大疾病險": { target: "critical", mode: "replace" },
-    "特定傷病": { target: "critical", mode: "replace" },
+    "重大傷病": { id: "critical-amount" },
+    "重大疾病": { id: "disease-amount" },
+    "重大疾病險": { id: "disease-amount" },
+    "特定傷病": { id: "disease-amount" },
 
     // ===============================
     // 癌症
     // ===============================
 
-    "癌症一次金": { target: "cancer", mode: "sum" },
-    "初次罹
+    "癌症一次金": { id: "cancer-once" },
+    "初次罹癌": { id: "cancer-once" },
+    "初次罹癌保險金": { id: "cancer-once" },
+    "癌症一次給付": { id: "cancer-once" },
+
+    "癌症住院": { id: "cancer-hosp" },
+    "癌症病房": { id: "cancer-hosp" },
+
+    "癌症手術": { id: "cancer-op" },
+
+    "癌症門診": { id: "cancer-clinic" },
+
+    "癌症療養": { id: "cancer-care" },
+
+    // ===============================
+    // 醫療
+    // ===============================
+
+    "住院日額": { id: "daily-hosp" },
+    "日額": { id: "daily-hosp" },
+
+    "住院看護": { id: "daily-nurse" },
+    "看護": { id: "daily-nurse" },
+
+    "出院療養": { id: "daily-post" },
+
+    "定額手術(最低)": { id: "daily-op-min" },
+    "定額手術(最高)": { id: "daily-op-max" },
+
+    // ===============================
+    // 實支實付
+    // ===============================
+
+    "住院限額": { id: "real-hosp" },
+    "雜費": { id: "real-misc" },
+    "手術費": { id: "real-op" },
+    "門診手術": { id: "real-opd-op" },
+
+    // ===============================
+    // 意外
+    // ===============================
+
+    "意外身故": { id: "acc-life" },
+    "意外失能": { id: "acc-disable" },
+    "意外醫療": { id: "acc-medical" },
+    "骨折": { id: "acc-fracture" },
+
+    // ===============================
+    // 長照
+    // ===============================
+
+    "長照一次金": { id: "care-once" },
+    "長照月扶助金": { id: "care-month" },
+    "長照分期": { id: "care-installment" }
+
+};
+
+// ===== 新增 OCR 功能結束 =====
