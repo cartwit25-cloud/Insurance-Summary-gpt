@@ -2,24 +2,90 @@
 
 function parseOCR(text){
 
-    const result={};
+    const result = {};
 
-    const lines=text
+    const lines = text
         .split(/\r?\n/)
-        .map(v=>v.trim())
-        .filter(v=>v.length>0);
+        .map(v => v.trim())
+        .filter(v => v.length);
 
-    for(let i=0;i<lines.length;i++){
+    for(let i = 0; i < lines.length; i++){
 
-        const title=lines[i];
+        const line = lines[i];
 
-        const next=lines[i+1]||"";
+        // ---------- Case 1 ----------
+        // 同一行：終身壽險 100萬
 
-        const value=parseNumber(next);
+        let match = line.match(/^(.+?)\s+([\d,.]+(?:\.\d+)?\s*[萬億元千]*)/);
 
-        if(value!==null){
+        if(match){
 
-            result[title]=value;
+            const title = normalizeTitle(match[1]);
+
+            const value = parseNumber(match[2]);
+
+            if(value !== null){
+
+                result[title] = value;
+
+                continue;
+
+            }
+
+        }
+
+        // ---------- Case 2 ----------
+        // 冒號：終身壽險：100萬
+
+        match = line.match(/^(.+?)[:：]\s*([\d,.]+(?:\.\d+)?\s*[萬億元千]*)/);
+
+        if(match){
+
+            const title = normalizeTitle(match[1]);
+
+            const value = parseNumber(match[2]);
+
+            if(value !== null){
+
+                result[title] = value;
+
+                continue;
+
+            }
+
+        }
+
+        // ---------- Case 3 ----------
+        // 點線：終身壽險........100萬
+
+        match = line.match(/^(.+?)[.．·•…。]+([\d,.]+(?:\.\d+)?\s*[萬億元千]*)/);
+
+        if(match){
+
+            const title = normalizeTitle(match[1]);
+
+            const value = parseNumber(match[2]);
+
+            if(value !== null){
+
+                result[title] = value;
+
+                continue;
+
+            }
+
+        }
+
+        // ---------- Case 4 ----------
+        // 標題 / 下一行數字
+
+        const next = lines[i + 1] || "";
+
+        const value = parseNumber(next);
+
+        if(value !== null){
+
+            result[normalizeTitle(line)] = value;
 
             i++;
 
@@ -28,44 +94,6 @@ function parseOCR(text){
     }
 
     return result;
-
-}
-
-function parseNumber(str){
-
-    if(!str)return null;
-
-    let s=str.replace(/,/g,"");
-
-    const num=parseFloat(s);
-
-    if(isNaN(num))return null;
-
-    if(s.includes("億")){
-
-        return num*10000;
-
-    }
-
-    if(s.includes("萬")){
-
-        return num;
-
-    }
-
-    if(s.includes("千")){
-
-        return num*1000;
-
-    }
-
-    if(s.includes("元")){
-
-        return num;
-
-    }
-
-    return num;
 
 }
 
