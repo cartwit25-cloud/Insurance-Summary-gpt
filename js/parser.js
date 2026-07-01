@@ -2,7 +2,7 @@
 
 function normalizeTitle(text) {
 
-    return text
+    return String(text)
         .replace(/[：:]/g, "")
         .replace(/[()（）]/g, "")
         .replace(/\s+/g, " ")
@@ -24,7 +24,7 @@ function parseOCR(text) {
         const line = lines[i];
 
         // Case 1：同一行
-        let match = line.match(/^(.+?)\s+([\d,.]+(?:\.\d+)?\s*[萬億元千]*)/);
+        let match = line.match(/^(.+?)\s+([\d,.]+(?:\.\d+)?\s*[億萬千元]*)/);
 
         if (match) {
 
@@ -39,7 +39,7 @@ function parseOCR(text) {
         }
 
         // Case 2：冒號
-        match = line.match(/^(.+?)[:：]\s*([\d,.]+(?:\.\d+)?\s*[萬億元千]*)/);
+        match = line.match(/^(.+?)[:：]\s*([\d,.]+(?:\.\d+)?\s*[億萬千元]*)/);
 
         if (match) {
 
@@ -54,7 +54,7 @@ function parseOCR(text) {
         }
 
         // Case 3：點線
-        match = line.match(/^(.+?)[.．·•…。]+([\d,.]+(?:\.\d+)?\s*[萬億元千]*)/);
+        match = line.match(/^(.+?)[.．·•…。]+([\d,.]+(?:\.\d+)?\s*[億萬千元]*)/);
 
         if (match) {
 
@@ -68,7 +68,7 @@ function parseOCR(text) {
 
         }
 
-        // Case 4：下一行是數字
+        // Case 4：上下兩行
         const next = lines[i + 1] || "";
 
         const value = parseNumber(next);
@@ -90,7 +90,9 @@ function parseNumber(str) {
 
     if (!str) return null;
 
-    let s = str.replace(/,/g, "").trim();
+    const s = String(str)
+        .replace(/,/g, "")
+        .replace(/\s/g, "");
 
     const num = parseFloat(s);
 
@@ -101,8 +103,6 @@ function parseNumber(str) {
     if (s.includes("萬")) return num;
 
     if (s.includes("千")) return num * 1000;
-
-    if (s.includes("元")) return num;
 
     return num;
 
