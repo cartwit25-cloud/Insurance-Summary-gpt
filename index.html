@@ -447,9 +447,40 @@ body {
       </div>
     </div>
 
-    <button class="generate-btn" onclick="generate()">
-      <i class="ti ti-layout-cards"></i> 生成保障卡片
-    </button>
+    <!-- ===== 新增 OCR 功能開始 ===== -->
+
+<div style="display:flex;gap:10px;margin-top:12px;">
+
+<button
+class="btn-sec"
+type="button"
+onclick="document.getElementById('ocrFile').click()">
+
+<i class="ti ti-photo"></i>
+
+匯入保單圖片
+
+</button>
+
+<button
+class="generate-btn"
+onclick="generate()">
+
+<i class="ti ti-layout-cards"></i>
+
+生成保障卡片
+
+</button>
+
+</div>
+
+<input
+type="file"
+id="ocrFile"
+accept="image/png,image/jpeg,image/jpg"
+style="display:none;">
+
+<!-- ===== 新增 OCR 功能結束 ===== -->
   </div>
 
   <!-- ===== RESULT ===== -->
@@ -869,5 +900,18 @@ async function exportPDF(){
   pdf.save(clientName + '的保單匯總報告.pdf');
 }
 </script>
+  <!-- ===== 新增 OCR 功能開始 ===== -->
+
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+
+<script src="js/utils.js"></script>
+
+<script src="js/mapping.js"></script>
+
+<script src="js/parser.js"></script>
+
+<script src="js/ocr.js"></script>
+
+<!-- ===== 新增 OCR 功能結束 ===== -->
 </body>
 </html>
