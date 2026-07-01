@@ -2,6 +2,13 @@
 
 const OCR_MAPPING = {
 
-};
+    // ========= 壽險 =========
 
-// ===== 新增 OCR 功能結束 =====
+    "終身壽險": {
+        target: "life",
+        mode: "replace"
+    },
+
+    "定期壽險": {
+        target: "life",
+        mode:
