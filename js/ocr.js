@@ -44,7 +44,15 @@ async function startOCR(e) {
 
         console.log("========== OCR RESULT ==========");
 
-        console.log(result.data.text);
+        const rawText=result.data.text;
+
+console.log(rawText);
+
+const data=parseOCR(rawText);
+
+console.log("========== JSON ==========");
+
+console.table(data);
 
         console.log("===============================");
 
