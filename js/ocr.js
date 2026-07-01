@@ -48,15 +48,17 @@ async function startOCR(e) {
 
 console.log(rawText);
 
-const data=parseOCR(rawText);
+const rawData = parseOCR(rawText);
 
-console.log("========== JSON ==========");
+console.log("========== OCR JSON ==========");
 
-console.table(data);
+console.table(rawData);
 
-        console.log("===============================");
+const mappedCount = applyOCRMapping(rawData);
 
-        alert("OCR完成，請打開F12 Console查看辨識文字");
+console.log("===============================");
+
+alert(`OCR完成，共填入 ${mappedCount} 個欄位，請確認資料是否正確。`);
 
     }
 
@@ -65,6 +67,42 @@ console.table(data);
         console.error(err);
 
         hideOCRLoading();
+        // ===== 新增 OCR 功能開始 =====
+
+function applyOCRMapping(rawData) {
+
+    let count = 0;
+
+    for (const title in rawData) {
+
+        const map = OCR_MAPPING[title];
+
+        if (!map) {
+
+            console.warn("找不到 Mapping：", title);
+
+            continue;
+
+        }
+
+        setInputValue(
+            map.id,
+            rawData[title]
+        );
+
+        console.log(
+            `${title} → ${map.id} = ${rawData[title]}`
+        );
+
+        count++;
+
+    }
+
+    return count;
+
+}
+
+// ===== 新增 OCR 功能結束 =====
 
         alert("OCR辨識失敗");
 
