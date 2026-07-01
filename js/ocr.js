@@ -3,9 +3,7 @@
 const ocrFileInput = document.getElementById("ocrFile");
 
 if (ocrFileInput) {
-
     ocrFileInput.addEventListener("change", startOCR);
-
 }
 
 async function startOCR(e) {
@@ -14,8 +12,29 @@ async function startOCR(e) {
 
     if (!file) return;
 
-    alert("OCR 初始化完成，下一階段開始辨識圖片。");
+    showOCRLoading("圖片讀取中...");
 
-}
+    try {
 
-// ===== 新增 OCR 功能結束 =====
+        const imageURL = URL.createObjectURL(file);
+
+        const result = await Tesseract.recognize(
+            imageURL,
+            "chi_tra+eng",
+            {
+                logger: (m) => {
+
+                    if (m.status) {
+
+                        const percent = Math.round((m.progress || 0) * 100);
+
+                        showOCRLoading(
+
+                            m.status + " " + percent + "%"
+
+                        );
+
+                    }
+
+                }
+           
