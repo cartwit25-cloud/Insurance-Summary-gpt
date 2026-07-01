@@ -28,9 +28,7 @@ async function startOCR(e) {
 
                         const percent = Math.round(m.progress * 100);
 
-                        showOCRLoading(
-                            `${m.status} ${percent}%`
-                        );
+                        showOCRLoading(`${m.status} ${percent}%`);
 
                     }
 
@@ -44,30 +42,34 @@ async function startOCR(e) {
 
         console.log("========== OCR RESULT ==========");
 
-        const rawText=result.data.text;
+        const rawText = result.data.text;
 
-console.log(rawText);
+        console.log(rawText);
 
-const rawData = parseOCR(rawText);
+        const rawData = parseOCR(rawText);
 
-console.log("========== OCR JSON ==========");
+        console.log("========== OCR JSON ==========");
 
-console.table(rawData);
+        console.table(rawData);
 
-const mappedCount = applyOCRMapping(rawData);
+        const mappedCount = applyOCRMapping(rawData);
 
-console.log("===============================");
+        console.log("===============================");
 
-alert(`OCR完成，共填入 ${mappedCount} 個欄位，請確認資料是否正確。`);
+        alert(`OCR完成，共填入 ${mappedCount} 個欄位，請確認資料是否正確。`);
 
     }
-
     catch (err) {
 
         console.error(err);
 
         hideOCRLoading();
-        // ===== 新增 OCR 功能開始 =====
+
+        alert("OCR辨識失敗");
+
+    }
+
+}
 
 function applyOCRMapping(rawData) {
 
@@ -85,14 +87,9 @@ function applyOCRMapping(rawData) {
 
         }
 
-        setInputValue(
-            map.id,
-            rawData[title]
-        );
+        setInputValue(map.id, rawData[title]);
 
-        console.log(
-            `${title} → ${map.id} = ${rawData[title]}`
-        );
+        console.log(`${title} → ${map.id} = ${rawData[title]}`);
 
         count++;
 
@@ -102,56 +99,42 @@ function applyOCRMapping(rawData) {
 
 }
 
-// ===== 新增 OCR 功能結束 =====
+function showOCRLoading(text) {
 
-        alert("OCR辨識失敗");
+    let box = document.getElementById("ocrLoading");
 
-    }
+    if (!box) {
 
-}
+        box = document.createElement("div");
 
-function showOCRLoading(text){
+        box.id = "ocrLoading";
 
-    let box=document.getElementById("ocrLoading");
+        box.style.position = "fixed";
+        box.style.left = "50%";
+        box.style.top = "50%";
+        box.style.transform = "translate(-50%,-50%)";
 
-    if(!box){
-
-        box=document.createElement("div");
-
-        box.id="ocrLoading";
-
-        box.style.position="fixed";
-        box.style.left="50%";
-        box.style.top="50%";
-        box.style.transform="translate(-50%,-50%)";
-
-        box.style.background="#ffffff";
-
-        box.style.padding="18px 24px";
-
-        box.style.borderRadius="12px";
-
-        box.style.boxShadow="0 10px 30px rgba(0,0,0,.18)";
-
-        box.style.zIndex="999999";
-
-        box.style.fontSize="14px";
-
-        box.style.fontWeight="600";
+        box.style.background = "#ffffff";
+        box.style.padding = "18px 24px";
+        box.style.borderRadius = "12px";
+        box.style.boxShadow = "0 10px 30px rgba(0,0,0,.18)";
+        box.style.zIndex = "999999";
+        box.style.fontSize = "14px";
+        box.style.fontWeight = "600";
 
         document.body.appendChild(box);
 
     }
 
-    box.innerHTML=text;
+    box.innerHTML = text;
 
 }
 
-function hideOCRLoading(){
+function hideOCRLoading() {
 
-    const box=document.getElementById("ocrLoading");
+    const box = document.getElementById("ocrLoading");
 
-    if(box){
+    if (box) {
 
         box.remove();
 
